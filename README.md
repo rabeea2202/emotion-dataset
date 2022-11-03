@@ -70,6 +70,32 @@ train-eval-index:
       average: weighted
 tags:
 - emotion-classification
+dataset_info:
+  features:
+  - name: text
+    dtype: string
+  - name: label
+    dtype:
+      class_label:
+        names:
+          0: sadness
+          1: joy
+          2: love
+          3: anger
+          4: fear
+          5: surprise
+  splits:
+  - name: test
+    num_bytes: 217177
+    num_examples: 2000
+  - name: train
+    num_bytes: 1741541
+    num_examples: 16000
+  - name: validation
+    num_bytes: 214699
+    num_examples: 2000
+  download_size: 2069616
+  dataset_size: 2173417
 ---
 
 # Dataset Card for "emotion"
