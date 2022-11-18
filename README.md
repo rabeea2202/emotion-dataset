@@ -85,14 +85,14 @@ dataset_info:
           4: fear
           5: surprise
   splits:
-  - name: test
-    num_bytes: 217177
-    num_examples: 2000
   - name: train
     num_bytes: 1741541
     num_examples: 16000
   - name: validation
     num_bytes: 214699
+    num_examples: 2000
+  - name: test
+    num_bytes: 217177
     num_examples: 2000
   download_size: 2069616
   dataset_size: 2173417
