@@ -7,7 +7,7 @@ language_creators:
 language:
 - en
 license:
-- unknown
+- other
 multilinguality:
 - monolingual
 size_categories:
@@ -71,6 +71,7 @@ train-eval-index:
 tags:
 - emotion-classification
 dataset_info:
+- config_name: split
   features:
   - name: text
     dtype: string
@@ -78,24 +79,44 @@ dataset_info:
     dtype:
       class_label:
         names:
-          0: sadness
-          1: joy
-          2: love
-          3: anger
-          4: fear
-          5: surprise
+          '0': sadness
+          '1': joy
+          '2': love
+          '3': anger
+          '4': fear
+          '5': surprise
   splits:
   - name: train
-    num_bytes: 1741541
+    num_bytes: 1741597
     num_examples: 16000
   - name: validation
-    num_bytes: 214699
+    num_bytes: 214703
     num_examples: 2000
   - name: test
-    num_bytes: 217177
+    num_bytes: 217181
     num_examples: 2000
-  download_size: 2069616
-  dataset_size: 2173417
+  download_size: 740883
+  dataset_size: 2173481
+- config_name: unsplit
+  features:
+  - name: text
+    dtype: string
+  - name: label
+    dtype:
+      class_label:
+        names:
+          '0': sadness
+          '1': joy
+          '2': love
+          '3': anger
+          '4': fear
+          '5': surprise
+  splits:
+  - name: train
+    num_bytes: 45445685
+    num_examples: 416809
+  download_size: 15388281
+  dataset_size: 45445685
 ---
 
 # Dataset Card for "emotion"
@@ -150,49 +171,30 @@ Emotion is a dataset of English Twitter messages with six basic emotions: anger,
 
 ### Data Instances
 
-#### default
-
-- **Size of downloaded dataset files:** 1.97 MB
-- **Size of the generated dataset:** 2.07 MB
-- **Total amount of disk used:** 4.05 MB
-
-An example of 'train' looks as follows.
+An example looks as follows.
 ```
 {
-    "label": 0,
-    "text": "im feeling quite sad and sorry for myself but ill snap out of it soon"
+  "text": "im feeling quite sad and sorry for myself but ill snap out of it soon",
+  "label": 0
 }
-```
-
-#### emotion
-
-- **Size of downloaded dataset files:** 1.97 MB
-- **Size of the generated dataset:** 2.09 MB
-- **Total amount of disk used:** 4.06 MB
-
-An example of 'validation' looks as follows.
-```
-
 ```
 
 ### Data Fields
 
-The data fields are the same among all splits.
-
-#### default
+The data fields are:
 - `text`: a `string` feature.
 - `label`: a classification label, with possible values including `sadness` (0), `joy` (1), `love` (2), `anger` (3), `fear` (4), `surprise` (5).
 
-#### emotion
-- `text`: a `string` feature.
-- `label`: a `string` feature.
-
 ### Data Splits
 
-| name    | train | validation | test |
-| ------- | ----: | ---------: | ---: |
-| default | 16000 |       2000 | 2000 |
-| emotion | 16000 |       2000 | 2000 |
+The dataset has 2 configurations:
+- split: with a total of 20_000 examples split into train, validation and split
+- unsplit: with a total of 416_809 examples in a single train split
+
+| name    |  train | validation | test |
+|---------|-------:|-----------:|-----:|
+| split   |  16000 |       2000 | 2000 |
+| unsplit | 416809 |        n/a |  n/a |
 
 ## Dataset Creation
 
@@ -246,10 +248,11 @@ The data fields are the same among all splits.
 
 ### Licensing Information
 
-[More Information Needed](https://github.com/huggingface/datasets/blob/master/CONTRIBUTING.md#how-to-contribute-to-the-dataset-cards)
+The dataset should be used for educational and research purposes only.
 
 ### Citation Information
 
+ If you use this dataset, please cite:
 ```
 @inproceedings{saravia-etal-2018-carer,
     title = "{CARER}: Contextualized Affect Representations for Emotion Recognition",
@@ -268,9 +271,7 @@ The data fields are the same among all splits.
     pages = "3687--3697",
     abstract = "Emotions are expressed in nuanced ways, which varies by collective or individual experiences, knowledge, and beliefs. Therefore, to understand emotion, as conveyed through text, a robust mechanism capable of capturing and modeling different linguistic nuances and phenomena is needed. We propose a semi-supervised, graph-based algorithm to produce rich structural descriptors which serve as the building blocks for constructing contextualized affect representations from text. The pattern-based representations are further enriched with word embeddings and evaluated through several emotion recognition tasks. Our experimental results demonstrate that the proposed method outperforms state-of-the-art techniques on emotion recognition tasks.",
 }
-
 ```
-
 
 ### Contributions
 
