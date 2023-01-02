@@ -1,4 +1,4 @@
-import csv
+import json
 
 import datasets
 from datasets.tasks import TextClassification
@@ -27,14 +27,33 @@ _CITATION = """\
 _DESCRIPTION = """\
 Emotion is a dataset of English Twitter messages with six basic emotions: anger, fear, joy, love, sadness, and surprise. For more detailed information please refer to the paper.
 """
-_URL = "https://github.com/dair-ai/emotion_dataset"
-# use dl=1 to force browser to download data instead of displaying it
-_TRAIN_DOWNLOAD_URL = "https://www.dropbox.com/s/1pzkadrvffbqw6o/train.txt?dl=1"
-_VALIDATION_DOWNLOAD_URL = "https://www.dropbox.com/s/2mzialpsgf9k5l3/val.txt?dl=1"
-_TEST_DOWNLOAD_URL = "https://www.dropbox.com/s/ikkqxfdbdec3fuj/test.txt?dl=1"
+
+_HOMEPAGE = "https://github.com/dair-ai/emotion_dataset"
+
+_LICENSE = "The dataset should be used for educational and research purposes only"
+
+_URLS = {
+    "split": {
+        "train": "data/train.jsonl.gz",
+        "validation": "data/validation.jsonl.gz",
+        "test": "data/test.jsonl.gz",
+    },
+    "unsplit": {
+        "train": "data/data.jsonl.gz",
+    },
+}
 
 
 class Emotion(datasets.GeneratorBasedBuilder):
+    VERSION = datasets.Version("1.0.0")
+    BUILDER_CONFIGS = [
+        datasets.BuilderConfig(
+            name="split", version=VERSION, description="Dataset split in train, validation and test"
+        ),
+        datasets.BuilderConfig(name="unsplit", version=VERSION, description="Unsplit dataset"),
+    ]
+    DEFAULT_CONFIG_NAME = "split"
+
     def _info(self):
         class_names = ["sadness", "joy", "love", "anger", "fear", "surprise"]
         return datasets.DatasetInfo(
@@ -43,26 +62,27 @@ class Emotion(datasets.GeneratorBasedBuilder):
                 {"text": datasets.Value("string"), "label": datasets.ClassLabel(names=class_names)}
             ),
             supervised_keys=("text", "label"),
-            homepage=_URL,
+            homepage=_HOMEPAGE,
             citation=_CITATION,
+            license=_LICENSE,
             task_templates=[TextClassification(text_column="text", label_column="label")],
         )
 
     def _split_generators(self, dl_manager):
         """Returns SplitGenerators."""
-        train_path = dl_manager.download_and_extract(_TRAIN_DOWNLOAD_URL)
-        valid_path = dl_manager.download_and_extract(_VALIDATION_DOWNLOAD_URL)
-        test_path = dl_manager.download_and_extract(_TEST_DOWNLOAD_URL)
-        return [
-            datasets.SplitGenerator(name=datasets.Split.TRAIN, gen_kwargs={"filepath": train_path}),
-            datasets.SplitGenerator(name=datasets.Split.VALIDATION, gen_kwargs={"filepath": valid_path}),
-            datasets.SplitGenerator(name=datasets.Split.TEST, gen_kwargs={"filepath": test_path}),
-        ]
+        paths = dl_manager.download_and_extract(_URLS[self.config.name])
+        if self.config.name == "split":
+            return [
+                datasets.SplitGenerator(name=datasets.Split.TRAIN, gen_kwargs={"filepath": paths["train"]}),
+                datasets.SplitGenerator(name=datasets.Split.VALIDATION, gen_kwargs={"filepath": paths["validation"]}),
+                datasets.SplitGenerator(name=datasets.Split.TEST, gen_kwargs={"filepath": paths["test"]}),
+            ]
+        else:
+            return [datasets.SplitGenerator(name=datasets.Split.TRAIN, gen_kwargs={"filepath": paths["train"]})]
 
     def _generate_examples(self, filepath):
         """Generate examples."""
-        with open(filepath, encoding="utf-8") as csv_file:
-            csv_reader = csv.reader(csv_file, delimiter=";")
-            for id_, row in enumerate(csv_reader):
-                text, label = row
-                yield id_, {"text": text, "label": label}
+        with open(filepath, encoding="utf-8") as f:
+            for idx, line in enumerate(f):
+                example = json.loads(line)
+                yield idx, example
