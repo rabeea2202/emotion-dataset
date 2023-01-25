@@ -1,5 +1,4 @@
 ---
-pretty_name: Emotion
 annotations_creators:
 - machine-generated
 language_creators:
@@ -19,55 +18,7 @@ task_categories:
 task_ids:
 - multi-class-classification
 paperswithcode_id: emotion
-train-eval-index:
-- config: default
-  task: text-classification
-  task_id: multi_class_classification
-  splits:
-    train_split: train
-    eval_split: test
-  col_mapping:
-    text: text
-    label: target
-  metrics:
-  - type: accuracy
-    name: Accuracy
-  - type: f1
-    name: F1 macro
-    args:
-      average: macro
-  - type: f1
-    name: F1 micro
-    args:
-      average: micro
-  - type: f1
-    name: F1 weighted
-    args:
-      average: weighted
-  - type: precision
-    name: Precision macro
-    args:
-      average: macro
-  - type: precision
-    name: Precision micro
-    args:
-      average: micro
-  - type: precision
-    name: Precision weighted
-    args:
-      average: weighted
-  - type: recall
-    name: Recall macro
-    args:
-      average: macro
-  - type: recall
-    name: Recall micro
-    args:
-      average: micro
-  - type: recall
-    name: Recall weighted
-    args:
-      average: weighted
+pretty_name: Emotion
 tags:
 - emotion-classification
 dataset_info:
@@ -117,6 +68,55 @@ dataset_info:
     num_examples: 416809
   download_size: 15388281
   dataset_size: 45445685
+train-eval-index:
+- config: default
+  task: text-classification
+  task_id: multi_class_classification
+  splits:
+    train_split: train
+    eval_split: test
+  col_mapping:
+    text: text
+    label: target
+  metrics:
+  - type: accuracy
+    name: Accuracy
+  - type: f1
+    name: F1 macro
+    args:
+      average: macro
+  - type: f1
+    name: F1 micro
+    args:
+      average: micro
+  - type: f1
+    name: F1 weighted
+    args:
+      average: weighted
+  - type: precision
+    name: Precision macro
+    args:
+      average: macro
+  - type: precision
+    name: Precision micro
+    args:
+      average: micro
+  - type: precision
+    name: Precision weighted
+    args:
+      average: weighted
+  - type: recall
+    name: Recall macro
+    args:
+      average: macro
+  - type: recall
+    name: Recall micro
+    args:
+      average: micro
+  - type: recall
+    name: Recall weighted
+    args:
+      average: weighted
 ---
 
 # Dataset Card for "emotion"
