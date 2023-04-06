@@ -151,9 +151,9 @@ train-eval-index:
 - **Repository:** [More Information Needed](https://github.com/huggingface/datasets/blob/master/CONTRIBUTING.md#how-to-contribute-to-the-dataset-cards)
 - **Paper:** [More Information Needed](https://github.com/huggingface/datasets/blob/master/CONTRIBUTING.md#how-to-contribute-to-the-dataset-cards)
 - **Point of Contact:** [More Information Needed](https://github.com/huggingface/datasets/blob/master/CONTRIBUTING.md#how-to-contribute-to-the-dataset-cards)
-- **Size of downloaded dataset files:** 3.95 MB
-- **Size of the generated dataset:** 4.16 MB
-- **Total amount of disk used:** 8.11 MB
+- **Size of downloaded dataset files:** 16.13 MB
+- **Size of the generated dataset:** 47.62 MB
+- **Total amount of disk used:** 63.75 MB
 
 ### Dataset Summary
 
