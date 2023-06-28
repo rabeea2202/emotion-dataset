@@ -27,3 +27,4 @@ saved_model/**/* filter=lfs diff=lfs merge=lfs -text
 *tfevents* filter=lfs diff=lfs merge=lfs -text
 split/train/index.duckdb filter=lfs diff=lfs merge=lfs -text
 split/validation/index.duckdb filter=lfs diff=lfs merge=lfs -text
+split/test/index.duckdb filter=lfs diff=lfs merge=lfs -text
